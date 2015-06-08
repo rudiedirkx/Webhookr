@@ -1,0 +1,57 @@
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+    android:orientation="vertical"
+>
+
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/headerBase"
+		style="?android:attr/listSeparatorTextViewStyle"
+	/>
+	<EditText
+		android:id="@+id/name"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:hint="@string/default_name"
+		android:singleLine="true"
+	/>
+	<EditText
+		android:id="@+id/url"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:inputType="textUri"
+		android:hint="@string/default_url"
+	/>
+
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/headerParams"
+		style="?android:attr/listSeparatorTextViewStyle"
+	/>
+	<EditText
+		android:id="@+id/paramTitle"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:hint="@string/paramTitle"
+		android:singleLine="true"
+	/>
+	<EditText
+		android:id="@+id/paramUrl"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:hint="@string/paramUrl"
+		android:singleLine="true"
+	/>
+
+	<Button
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+	    android:text="@string/save"
+	/>
+
+</LinearLayout>

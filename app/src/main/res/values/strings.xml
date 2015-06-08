@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Webhookr</string>
+
+    <string name="action_settings">Settings</string>
+
+	<string name="edit_message">Enter a message</string>
+	<string name="button_send">Send</string>
+	<string name="title_activity_display_message">My Message</string>
+
+	<string name="title_activity_main_list">Main List</string>
+	<string name="title_activity_edit_webhook">Webhook form</string>
+
+	<string name="default_name">Name...</string>
+	<string name="default_url">URL...</string>
+	<string name="save">Save</string>
+	<string name="headerParams">Parameters</string>
+	<string name="headerBase">Base</string>
+	<string name="paramTitle">Param name for \'title\'</string>
+	<string name="paramUrl">Param name for \'url\'</string>
+</resources>
