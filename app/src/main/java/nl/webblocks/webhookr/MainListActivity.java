@@ -1,17 +1,16 @@
 package nl.webblocks.webhookr;
 
-import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,20 +28,46 @@ public class MainListActivity extends ActionBarActivity {
 
 
         // Webhooks from db
-//        WebhookContract.WebhookDbHelper mDbHelper = new WebhookContract.WebhookDbHelper(getApplicationContext());
+        WebhookDbHelper mDbHelper = new WebhookDbHelper(getApplicationContext());
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        // DEBUG //
+//        ContentValues values = new ContentValues();
+//        values.put(WebhookDbHelper.COLUMN_NAME, "Name 3");
+//        values.put(WebhookDbHelper.COLUMN_URL, "http://url.com/path");
+//        values.put(WebhookDbHelper.COLUMN_PARAM_TITLE, "ptitle");
+//        values.put(WebhookDbHelper.COLUMN_PARAM_URL, "purl");
+//        long insertId;
+//        insertId = db.insert(WebhookDbHelper.TABLE_NAME, null, values);
+        // DEBUG //
+
+        Cursor cursor = db.query(
+                WebhookDbHelper.TABLE_NAME,
+                WebhookDbHelper.ALL_COLUMNS,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+
+        final ArrayList<Webhook> items = Webhook.allFromCursor(cursor);
 
 
 
         // Webhooks
-        final ArrayList<Webhook> items = new ArrayList<Webhook>();
-        items.add(new Webhook(1, "Name 1", "https://example.com/1"));
-        items.add(new Webhook(2, "Name 2", "https://example.com/2"));
-        items.add(new Webhook(3, "Name 3", "https://example.com/3"));
-        items.add(new Webhook(3, "Name 4", "https://example.com/4"));
-        items.add(new Webhook(4, "Name 5", "https://example.com/5"));
+//        final ArrayList<Webhook> items = new ArrayList<Webhook>();
+//        items.add(new Webhook(1, "Name 1", "https://example.com/1"));
+//        items.add(new Webhook(2, "Name 2", "https://example.com/2"));
+//        items.add(new Webhook(3, "Name 3", "https://example.com/3"));
+//        items.add(new Webhook(3, "Name 4", "https://example.com/4"));
+//        items.add(new Webhook(4, "Name 5", "https://example.com/5"));
+
+
 
         // Display via adapter
-        WebhooksAdapter adapter = new WebhooksAdapter(this, items);
+//        WebhooksCursorAdapter adapter = new WebhooksCursorAdapter(this, c);
+        WebhooksArrayAdapter adapter = new WebhooksArrayAdapter(this, items);
         listView.setAdapter(adapter);
 
 
@@ -53,8 +78,7 @@ public class MainListActivity extends ActionBarActivity {
                 Webhook item = items.get(position);
 
                 Intent intent = new Intent(v.getContext(), EditWebhookActivity.class);
-//                intent.putExtra("tmp", item.name);
-                intent.putExtra("webhook", (Serializable) item);
+                intent.putExtra("webhook", item.id);
                 startActivity(intent);
             }
         };

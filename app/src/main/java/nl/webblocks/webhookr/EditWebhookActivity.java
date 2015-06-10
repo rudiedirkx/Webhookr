@@ -15,7 +15,8 @@ public class EditWebhookActivity extends ActionBarActivity {
         setContentView(R.layout.activity_edit_webhook);
 
         Intent intent = getIntent();
-        Webhook webhook = (Webhook) intent.getSerializableExtra("webhook");
+        int id = intent.getIntExtra("webhook", 0);
+        Webhook webhook = Webhook.oneFromId(getApplicationContext(), id);
 
         // Base
         TextView name = (TextView) findViewById(R.id.name);

@@ -9,9 +9,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class WebhooksAdapter extends ArrayAdapter<Webhook> {
+public class WebhooksArrayAdapter extends ArrayAdapter<Webhook> {
 
-    public WebhooksAdapter(Context context, ArrayList<Webhook> objects) {
+    public WebhooksArrayAdapter(Context context, ArrayList<Webhook> objects) {
         super(context, 0, objects);
     }
 
