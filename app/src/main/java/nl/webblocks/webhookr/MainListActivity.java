@@ -28,6 +28,11 @@ public class MainListActivity extends ActionBarActivity {
 
 
 
+        // Webhooks from db
+//        WebhookContract.WebhookDbHelper mDbHelper = new WebhookContract.WebhookDbHelper(getApplicationContext());
+
+
+
         // Webhooks
         final ArrayList<Webhook> items = new ArrayList<Webhook>();
         items.add(new Webhook(1, "Name 1", "https://example.com/1"));
