@@ -25,7 +25,7 @@ public class WebhooksAdapter extends ArrayAdapter<Webhook> {
         text1.setText(webhook.name);
 
         TextView text2 = (TextView) view.findViewById(android.R.id.text2);
-        text2.setText(webhook.url);
+        text2.setText(webhook.getUrlDomain());
 
         return view;
     }
