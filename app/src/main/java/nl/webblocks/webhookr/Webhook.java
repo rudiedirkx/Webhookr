@@ -38,7 +38,9 @@ public class Webhook implements Serializable {
         int id = cursor.getInt(cursor.getColumnIndexOrThrow(WebhookDbHelper.COLUMN_ID));
         String name = cursor.getString(cursor.getColumnIndexOrThrow(WebhookDbHelper.COLUMN_NAME));
         String url = cursor.getString(cursor.getColumnIndexOrThrow(WebhookDbHelper.COLUMN_URL));
-        return new Webhook(id, name, url);
+        String paramTitle = cursor.getString(cursor.getColumnIndexOrThrow(WebhookDbHelper.COLUMN_PARAM_TITLE));
+        String paramUrl = cursor.getString(cursor.getColumnIndexOrThrow(WebhookDbHelper.COLUMN_PARAM_URL));
+        return new Webhook(id, name, url, paramTitle, paramUrl);
     }
 
     public static ArrayList<Webhook> allFromCursor(Cursor cursor) {
@@ -66,6 +68,12 @@ public class Webhook implements Serializable {
         this.id = id;
         this.name = name;
         this.url = url;
+    }
+
+    public Webhook(int id, String name, String url, String paramTitle, String paramUrl) {
+        this(id, name, url);
+        this.paramTitle = paramTitle;
+        this.paramUrl = paramUrl;
     }
 
     public String getUrlDomain() {
