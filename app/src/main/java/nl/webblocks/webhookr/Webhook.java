@@ -1,10 +1,60 @@
 package nl.webblocks.webhookr;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.webkit.URLUtil;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Webhook implements Serializable {
+
+    public static boolean validUrl(String url) {
+        return URLUtil.isHttpsUrl(url) || URLUtil.isHttpUrl(url);
+    }
+
+    public static Webhook oneFromId(Context context, int id) {
+        WebhookDbHelper mDbHelper = new WebhookDbHelper(context);
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        Cursor cursor = db.query(
+                WebhookDbHelper.TABLE_NAME,
+                WebhookDbHelper.ALL_COLUMNS,
+                "id = ?",
+                new String[] {Integer.toString(id)},
+                null,
+                null,
+                null
+        );
+
+        cursor.moveToFirst();
+        return oneFromCursor(cursor);
+    }
+
+    public static Webhook oneFromCursor(Cursor cursor) {
+        int id = cursor.getInt(cursor.getColumnIndexOrThrow(WebhookDbHelper.COLUMN_ID));
+        String name = cursor.getString(cursor.getColumnIndexOrThrow(WebhookDbHelper.COLUMN_NAME));
+        String url = cursor.getString(cursor.getColumnIndexOrThrow(WebhookDbHelper.COLUMN_URL));
+        return new Webhook(id, name, url);
+    }
+
+    public static ArrayList<Webhook> allFromCursor(Cursor cursor) {
+        ArrayList<Webhook> list = new ArrayList<Webhook>();
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Webhook webhook = oneFromCursor(cursor);
+            list.add(webhook);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return list;
+    }
+
     public int id;
     public String name;
     public String url;
@@ -19,7 +69,7 @@ public class Webhook implements Serializable {
     }
 
     public String getUrlDomain() {
-        Pattern p = Pattern.compile("//(.+)/");
+        Pattern p = Pattern.compile("://([^/]+)");
         Matcher m = p.matcher(this.url);
 
         if (m.find()) {
